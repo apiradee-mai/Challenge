@@ -1,0 +1,34 @@
+test_name: Test Create Card
+
+stages:    
+  - name: Make sure that can create card success
+    request:
+      url: https://api.trello.com/1/cards
+      json: 
+        key: XXXX
+        token: XXXX
+        name: TestName
+        desc: TestDesc
+        idList: 5b6c95b404562869fba22f6b
+      method: POST
+    response:
+      status_code: 200
+      body:
+        idBoard: 5b6c95b404562869fba22f6a
+        name: TestName
+        desc: TestDesc
+      save:
+        body:
+            returned_id: id
+
+  - name: Make sure created card has correct name and description
+    request:
+      url: https://api.trello.com/1/cards/{returned_id}
+      method: GET
+    response:
+      status_code: 200
+      body:
+        idBoard: 5b6c95b404562869fba22f6a
+        name: TestName
+        desc: TestDesc
+
